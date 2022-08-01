@@ -21,7 +21,8 @@ LOCAL_PATH := device/xiaomi/light
 # Dynamic Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# API
+# VNDK
+PRODUCT_EXTRA_VNDK_VERSIONS := 31
 PRODUCT_SHIPPING_API_LEVEL := 31
 
 # Virtual A/B
@@ -46,11 +47,12 @@ AB_OTA_PARTITIONS += \
 
 # A/B
 PRODUCT_PACKAGES += \
-    otapreopt_script
+    otapreopt_script \
+    cppreopts.sh
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
-    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    POSTINSTALL_PATH_system=system/bin/mtk_plpath_utils \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
@@ -59,32 +61,32 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl.recovery \
     android.hardware.boot@1.2-impl \
 
-# Update Engine
+PRODUCT_PACKAGES_DEBUG += \
+    bootctl
+
+# Soong
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH)
+
+# Update engine
 PRODUCT_PACKAGES += \
     update_engine \
     update_engine_sideload \
     update_verifier
-    
+
+# MTK PlPath Utils
+PRODUCT_PACKAGES += \
+    mtk_plpath_utils.recovery
+
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
-    
+
 # Fastbootd
 PRODUCT_PACKAGES += \
-	fastbootd \
-	android.hardware.fastboot@1.0-impl-mock
-	
+    fastbootd \
+    android.hardware.fastboot@1.0-impl-mock
+
 # Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-service \
     android.hardware.health@2.1-impl
-    
-# Additional Libraries
-TARGET_RECOVERY_DEVICE_MODULES += \
-    libkeymaster4 \
-    libkeymaster41 \
-    libpuresoftkeymasterdevice
-
-TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster41.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so

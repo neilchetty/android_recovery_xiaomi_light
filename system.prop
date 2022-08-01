@@ -13,3 +13,6 @@ ro.hardware.gatekeeper=beanpod
 
 # Kmsetkey
 ro.hardware.kmsetkey=beanpod
+
+# adb 
+ro.adb.secure=0

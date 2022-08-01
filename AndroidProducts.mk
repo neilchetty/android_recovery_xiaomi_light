@@ -17,7 +17,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-     $(LOCAL_DIR)/twrp_light.mk
+     $(LOCAL_DIR)/lineage_light.mk
      
 COMMON_LUNCH_CHOICES := \
-    twrp_light-eng
+    lineage_light-eng
+    lineage_light-userdebug
+    lineage_light-user
